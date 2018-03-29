@@ -157,7 +157,7 @@ module.exports = {
                     };
                     var str = JSON.stringify(obj);
                     res.send(str);
-                    connection.release();
+                    //connection.release();
                 });
                 //双重？？？
                 connection.release();
@@ -244,7 +244,7 @@ module.exports = {
                             }else{
                                 res.end('{"success":"修改成功"}');
                             }
-                            connection.release();
+                            //connection.release();
                     })
                 }
                 connection.release();
@@ -266,7 +266,7 @@ module.exports = {
                         };
                         var str = JSON.stringify(obj);
                         res.send(str);
-                        connection.release();
+                        //connection.release();
                     })
                     connection.release();
             })
