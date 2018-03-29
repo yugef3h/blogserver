@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//var sql = require('./db.js');
 var crypto = require('crypto');
 var jwt = require("jsonwebtoken");
 var path=require('path');

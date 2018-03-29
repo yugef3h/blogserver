@@ -11,12 +11,12 @@ module.exports = {
     queryCase: 'SELECT * FROM cases order by id desc limit ?,?',
     delUsers: 'DELETE FROM users WHERE Id=?',
     addUsers: 'INSERT INTO users (Id,ComTelephone,Password,UserName,CompanyId,IsAdmin) values (0,?,?,?,0,0)',
-    putUsers: 'update users set UserName=?,ComTelephone=?  where Id=?',
+    putUsers: 'UPDATE users SET UserName=?,ComTelephone=?  WHERE Id=?',
     queryPass: 'SELECT Password FROM users WHERE UserName=?',
-    putPass: 'UPDATE users set Password=?  WHERE UserName=?',
+    putPass: 'UPDATE users SET Password=?  WHERE UserName=?',
     queryUsers: 'SELECT * FROM users order by id limit ?,?',
     delArticle: 'DELETE FROM article WHERE id=?',
-    queryEssage: 'insert into article (id,title,tag,author,content,CreateTime,ArticleImg,see,chart,des) values (0,?,?,?,?,?,?,0,0,?)',
+    queryEssage: 'INSERT INTO article (id,title,tag,author,content,CreateTime,ArticleImg,see,chart,des) values (0,?,?,?,?,?,?,0,0,?)',
     artId: 'SELECT * FROM article WHERE id=?',
     caseId : 'SELECT * FROM cases WHERE id=?'
 };
