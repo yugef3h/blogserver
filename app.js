@@ -20,12 +20,14 @@ app.use(morgan("dev"));
 //改动了headers!!!!未测试
 //另外如何避免预检请求的发生  判断  options
 app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080"); //http://localhost:8080为了跨域保持session，所以指定地址，生产环境改*
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type, Authorization,Content-Length, ");
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Max-Age','1728000');// 预检请求有效期20天
-    if(req.method=="OPTIONS") {
+    //res.header("Access-Control-Allow-Origin", req.headers.origin || '*');
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080"); //http://localhost:8080为了跨域保持session，所以指定地址，生产环境改*
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type, Authorization,Content-Length, ");
+    res.header('Access-Control-Allow-Credentials', true);//可以带cookies
+    res.header('Access-Control-Max-Age','1728000');// 预检请求有效期20天
+    res.header("X-Powered-By", '3.2.1')
+    if(req.method == "OPTIONS") {
         res.send(200);/*让options请求快速返回或者204无缓存*/
     } else {
         next();
