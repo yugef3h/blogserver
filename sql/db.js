@@ -44,14 +44,6 @@ module.exports = {
             })
         })
     },
-    //查询所有电影
-    queryAll: function (req, res, next) {
-        pool.getConnection(function (err, connection) {
-            connection.query($sql.queryAll, function (err, result) {
-                jsonWrite(res, result)
-            })
-        })
-    },
     //根据种类查询电影
     queryByKind: function (req, res, next) {
         var kind = req.query.kind || req.body.kind //为了拼凑正确的sql语句，这里要转下整数,由于kind是中文的话获取是乱码所以这里做一个转化，QAQ我才不会说是因为改了很多次编码格式都不成功才出此下策，
@@ -149,9 +141,7 @@ module.exports = {
                     };
                     var str = JSON.stringify(obj);
                     res.send(str);
-                    //connection.release();
                 });
-                //双重？？？
                 connection.release();
             })
         });
@@ -236,7 +226,6 @@ module.exports = {
                             }else{
                                 res.end('{"success":"修改成功"}');
                             }
-                            //connection.release();
                     })
                 }
                 connection.release();
@@ -258,7 +247,6 @@ module.exports = {
                         };
                         var str = JSON.stringify(obj);
                         res.send(str);
-                        //connection.release();
                     })
                     connection.release();
             })
