@@ -1,13 +1,10 @@
 # 说明
->  ygser 接口文档: [待配置]()
+>  ygser 接口文档: [待配置](https://github.com/yugef3h/blogserver)
 
 >  如果对您对此项目有兴趣，可以点 "Star" 支持一下 谢谢！ ^_^
 
->  或者您可以 "follow" 一下，我会不断开源更多的有趣的项目
-
 >  apidoc 生成 api 文档
 ```
-项目运行之前，请确保系统已经安装以下应用
 1、npm install apidoc -g
 2、在 package.json 中配置 apidoc
 3、app.js 中设置生成文档的路径，若我放在 public/apidoc 中，则 app.use('/public',express.static('public'));
