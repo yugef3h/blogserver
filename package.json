@@ -17,5 +17,18 @@
     "mysql": "^2.15.0",
     "serve-favicon": "~2.4.5",
     "ueditor": "^1.2.3"
+  },
+  "apidoc": {
+    "name": "ygser",
+    "version": "1.0.0",
+    "description": "ygser项目API文档",
+    "title": "ygser API",
+    "url" : "http://localhost:3000",
+    "sampleUrl": "http://localhost:3000",
+    "forceLanguage":"zh-cn",
+    "template": {
+      "withCompare": true,
+      "withGenerator": true
+    }
   }
 }

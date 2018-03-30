@@ -7,7 +7,17 @@ var ueditor=require('ueditor');
 var db = require('../sql/db');
 
 router.use('/public', express.static(__dirname + '/public'));
-
+/**
+ * 获得某个用户
+ * @api {POST} /users/login
+ * @apiDescription 登录验证
+ * @apiName login
+ * @apiParam (path参数) {String} username
+ * @apiParam (path参数) {String} password
+ * @apiSampleRequest /users/login
+ * @apiGroup User
+ * @apiVersion 1.0.0
+ */
 router.post('/login', function (req, res, next) {// router.all
     db.login(req, res, next);
 });
