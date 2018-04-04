@@ -15,7 +15,7 @@
 >  crawler 思路v1
 ```
 1、https://www.zwdu.com/search.php?keyword=择天记   
-2、过滤文档，找到 https://www.zwdu.com/book/8634/
+    2、过滤文档，找到 https://www.zwdu.com/book/8634/
 3、加入json
 4、爬虫爬去存入数据库
 5、读取数据库

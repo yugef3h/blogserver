@@ -1,6 +1,3 @@
-/**
- * Created by 12 on 2017/7/5.
- */
 const cheerio = require('cheerio')
 const mysql = require('mysql')
 const express = require('express')

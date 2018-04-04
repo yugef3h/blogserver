@@ -5,6 +5,7 @@ var jwt = require("jsonwebtoken");
 var path=require('path');
 var ueditor=require('ueditor');
 var db = require('../sql/db');
+var ztj = require('../crawler/ztj');
 
 router.use('/public', express.static(__dirname + '/public'));
 /**
@@ -70,6 +71,14 @@ router.get('/cases/:id.html', function (req, res, next) {
 //essage
 router.post('/essay',function (req,res,next)  {
     db.essay(req,res,next);
+})
+//novel
+router.post('/novel',function(req,res,next) {
+    var keyn = req.body.keyn;
+    var url = 'https://www.zwdu.com/search.php?keyword=' + keyn;
+    ztj(url,function(data){
+        res.send(data)
+    })
 })
 //ueditor
 router.use("/ueditor/ue", ueditor(path.join(process.cwd(), 'public'), function (req, res, next) {
