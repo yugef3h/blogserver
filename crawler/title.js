@@ -10,7 +10,7 @@ require('superagent-charset')(superagent)
 const async = require('async');
 let urls = require('./urls')
 urls = urls.slice(0)
-
+//console.log(urls);
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
