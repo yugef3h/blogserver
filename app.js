@@ -28,7 +28,7 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Max-Age','1728000');// 预检请求有效期20天
     res.header("X-Powered-By", '3.2.1')
     if(req.method == "OPTIONS") {
-        res.send(200);/*让options请求快速返回或者204无缓存*/
+        res.sendStatus(200);/*让options请求快速返回或者204无缓存*/
     } else {
         next();
     }

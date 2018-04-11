@@ -18,5 +18,7 @@ module.exports = {
     delArticle: 'DELETE FROM article WHERE id=?',
     queryEssage: 'INSERT INTO article (id,title,tag,author,content,CreateTime,ArticleImg,see,chart,des) values (0,?,?,?,?,?,?,0,0,?)',
     artId: 'SELECT * FROM article WHERE id=?',
-    caseId : 'SELECT * FROM cases WHERE id=?'
+    caseId : 'SELECT * FROM cases WHERE id=?',
+  novelKey: 'SELECT * FROM booktitles WHERE name=?',
+  addNovel: 'INSERT INTO booktitles (id, name, titles) value (0, ?, ?)'
 };

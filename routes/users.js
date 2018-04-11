@@ -74,11 +74,7 @@ router.post('/essay',function (req,res,next)  {
 })
 //novel
 router.post('/novel',function(req,res,next) {
-    var keyn = req.body.keyn;
-    var url = 'https://www.zwdu.com/search.php?keyword=' + keyn;
-    ztj(url,function(data){
-        res.send(data)
-    })
+    db.novelKey(req,res,next);
 })
 //ueditor
 router.use("/ueditor/ue", ueditor(path.join(process.cwd(), 'public'), function (req, res, next) {

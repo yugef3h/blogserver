@@ -16,14 +16,12 @@ function getHtmlByUrl(href,callback) {
                 .charset('gbk')
                 .end(function (err, res) {
                     const $ = cheerio.load(res.text,{decodeEntities: false});
-                    let content = [],id = 0
+                    let content = [];
                     $('#list dd').each((i,v) => {
                         var $v = $(v)
                         content.push($v.find('a').text() + '+' + 'https://www.zwdu.com'+ $v.find('a').attr('href'))
-                        ++ id
                     })
                     let obj = {
-                        id: id,
                         name: $('#info h1').text(),
                         content: content.join('-'),
                         //urls: urls.join('-')
