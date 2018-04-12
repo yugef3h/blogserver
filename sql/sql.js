@@ -19,6 +19,6 @@ module.exports = {
     queryEssage: 'INSERT INTO article (id,title,tag,author,content,CreateTime,ArticleImg,see,chart,des) values (0,?,?,?,?,?,?,0,0,?)',
     artId: 'SELECT * FROM article WHERE id=?',
     caseId : 'SELECT * FROM cases WHERE id=?',
-  novelKey: 'SELECT * FROM booktitles WHERE name=?',
-  addNovel: 'INSERT INTO booktitles (id, name, titles) value (0, ?, ?)'
+  novelKey: 'SELECT * FROM booktitles WHERE name LIKE ',// like后面的空格
+  addNovel: 'INSERT INTO booktitles (id, author, name, titles) value (0, ?, ?, ?)'
 };

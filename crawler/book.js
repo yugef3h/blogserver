@@ -100,7 +100,6 @@ function main(url) {
                     urls.push('http://www.zwdu.com' + $(v).find('a').attr('href'))
                 }
             })
-
             async.mapLimit(urls, 5, function (url, callback) {
                 id++
                 fetUrl(url, callback, id) //需要对章节编号，所以通过变量id来计数

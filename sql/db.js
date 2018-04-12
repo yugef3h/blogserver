@@ -4,7 +4,7 @@ let $sql = require('./sql');
 let crypto = require('crypto');
 let jwt = require("jsonwebtoken");
 var ztj = require('../crawler/ztj');
-
+const async = require('async');
 let pool = mysql.createPool($conf.mysql);
 //向前台返回JSON方法的简单封装
 let jsonWrite = function (res, ret) {
@@ -338,30 +338,40 @@ module.exports = {
   //小说查询
   novelKey: function (req, res, next) {
     let keyn = req.body.keyn;
-    let url = 'https://www.zwdu.com/search.php?keyword=' + keyn;
+    let page = req.body.page;
+    let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
+    let urls = [];
+    urls.push(url);
+    //console.log(req.body);
     pool.getConnection(function (err, connection) {
-      connection.query($sql.novelKey, [keyn], function (err, data) {
+      connection.query($sql.novelKey + `"%${keyn}%"`, function (err, data) {
         if (data.length === 0) {
+          connection.release();
           //返回状态码，避免被爬虫错误收录
           //res.status(404).end('err');
           ztj(url, function (data) {
-            connection.query($sql.addNovel, [data.name, data.content], function (err, data2) {
-              if (data2.length === 0) {
-                res.end({'err': '添加失败'});
-              } else {
-                res.send({'tip':`Hi, <<${data.name}>> 首次爬取缓存，请点此!`})
-              }
-            });
+            if (data.author) {
+              connection.query($sql.addNovel, [data.author, data.name, data.content], function (err, data) {
+
+                if (data.length === 0) {
+                  res.end({'err': '添加失败'});
+                } else {
+                  res.send({'tip':`Hi, <<${data.name}>> 首次爬取缓存，请点此!`})
+                }
+              });
+            } else {
+              //源地址资源总数反馈
+              //console.log(data)
+              res.send(data)
+            }
           });
+
           return;
         }
-        /*let obj = {
-          data: data,
-          success: "成功"
-        };
-        let str = JSON.stringify(obj);*/
+        //console.log('去了数据库')
         res.send(data);
         connection.release();
+        //console.log('断开数据库')
       })
     })
   }

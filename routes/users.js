@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 var path=require('path');
 var ueditor=require('ueditor');
 var db = require('../sql/db');
-var ztj = require('../crawler/ztj');
+var ztj = require('../crawler/ztj-package');
 
 router.use('/public', express.static(__dirname + '/public'));
 /**
