@@ -356,6 +356,7 @@ module.exports = {
                 if (data.length === 0) {
                   res.end({'err': '添加失败'});
                 } else {
+                  //console.log(data.name)
                   res.send({'tip':`Hi, <<${data.name}>> 首次爬取缓存，请点此!`})
                 }
               });
