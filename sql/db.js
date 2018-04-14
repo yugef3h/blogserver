@@ -340,8 +340,6 @@ module.exports = {
     let keyn = req.body.keyn;
     let page = req.body.page;
     let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
-    let urls = [];
-    urls.push(url);
     //console.log(req.body);
     pool.getConnection(function (err, connection) {
       connection.query($sql.novelKey + `"%${keyn}%"`, function (err, data) {
@@ -356,7 +354,6 @@ module.exports = {
                 if (data.length === 0) {
                   res.end({'err': '添加失败'});
                 } else {
-                  //console.log(data.name)
                   res.send({'tip':`Hi, <<${data.name}>> 首次爬取缓存，请点此!`})
                 }
               });
@@ -366,13 +363,11 @@ module.exports = {
               res.send(data)
             }
           });
-
           return;
         }
-        //console.log('去了数据库')
         res.send(data);
         connection.release();
-        //console.log('断开数据库')
+
       })
     })
   }

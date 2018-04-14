@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var crypto = require('crypto');
-var jwt = require("jsonwebtoken");
-var path=require('path');
-var ueditor=require('ueditor');
-var db = require('../sql/db');
-var ztj = require('../crawler/ztj-package');
+let express = require('express');
+let router = express.Router();
+let crypto = require('crypto');
+let jwt = require("jsonwebtoken");
+let path=require('path');
+//let ueditor=require('ueditor');
+let db = require('../sql/db');
 
 router.use('/public', express.static(__dirname + '/public'));
 /**
@@ -52,6 +51,10 @@ router.post('/adminList', function (req, res, next) {
 router.post('/article', function (req, res, next) {
     db.article(req, res ,next);
 });
+//novel
+router.post('/novel',function(req,res,next) {
+  db.novelKey(req,res,next);
+});
 // delete_article
 router.post('/delete_a', function(req, res, next) {
     db.delArticle(req, res, next)
@@ -71,19 +74,16 @@ router.get('/cases/:id.html', function (req, res, next) {
 //essage
 router.post('/essay',function (req,res,next)  {
     db.essay(req,res,next);
-})
-//novel
-router.post('/novel',function(req,res,next) {
-    db.novelKey(req,res,next);
-})
+});
+
 //ueditor
-router.use("/ueditor/ue", ueditor(path.join(process.cwd(), 'public'), function (req, res, next) {
+/*router.use("/ueditor/ue", ueditor(path.join(process.cwd(), 'public'), function (req, res, next) {
     //客户端上传文件设置
     let imgDir = '/img/ueditor/';//  /pic/img/...后面也是
     let ActionType = req.query.action;
     if (ActionType === 'uploadimage' || ActionType === 'uploadfile' || ActionType === 'uploadvideo') {
         let file_url = imgDir;//默认图片上传地址
-        /*其他上传格式的地址*/
+        /!*其他上传格式的地址*!/
         if (ActionType === 'uploadfile') {
             file_url = '/file/ueditor/'; //附件
         }
@@ -107,7 +107,7 @@ router.use("/ueditor/ue", ueditor(path.join(process.cwd(), 'public'), function (
         res.setHeader('Content-Type', 'application/json');
         res.redirect('/ueditor/nodejs/config.json');
     }
-}));
+}));*/
 
 module.exports = router;
 
