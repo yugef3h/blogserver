@@ -3,7 +3,7 @@ let $conf = require('./config');
 let $sql = require('./sql');
 let crypto = require('crypto');
 let jwt = require("jsonwebtoken");
-var ztj = require('../crawler/ztj');
+let ztj = require('../crawler/titles');
 const async = require('async');
 let pool = mysql.createPool($conf.mysql);
 //向前台返回JSON方法的简单封装
@@ -340,6 +340,7 @@ module.exports = {
     let keyn = req.body.keyn;
     let page = req.body.page;
     let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
+    //https://m.zwdu.com/search.php?keyword=重燃&page=1
     //console.log(req.body);
     pool.getConnection(function (err, connection) {
       connection.query($sql.novelKey + `"%${keyn}%"`, function (err, data) {
