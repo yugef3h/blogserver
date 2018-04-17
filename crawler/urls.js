@@ -1,6 +1,6 @@
 const urlList = [
-    //1、择天记
-    'http://www.zwdu.com/book/8634/',
+    //1、重燃
+    'https://www.zwdu.com/book/29944/',
     //2、雪中悍刀行
     'http://www.zwdu.com/book/7718/',
     //3、武道宗师

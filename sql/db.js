@@ -4,6 +4,7 @@ let $sql = require('./sql');
 let crypto = require('crypto');
 let jwt = require("jsonwebtoken");
 let ztj = require('../crawler/titles');
+let fetUrl = require('../crawler/bk');
 const async = require('async');
 let pool = mysql.createPool($conf.mysql);
 //向前台返回JSON方法的简单封装
@@ -370,6 +371,18 @@ module.exports = {
         connection.release();
 
       })
+    })
+  },
+  //章节内容
+  novelDetails : function (req,res,next) {
+    let url = req.body.url;
+    fetUrl(url, function (data) {
+      if(data.err) {
+        res.status(404).end('章节封顶');
+      } else {
+        res.send(data)
+      }
+
     })
   }
 };

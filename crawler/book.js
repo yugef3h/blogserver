@@ -14,8 +14,8 @@ const async = require('async');
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '123456',
-    database: 'book2',
+    password: '',
+    database: 'yuge',
     port: 3306
 })
 
@@ -27,7 +27,7 @@ let url = urlList[urlId - 1]  //url地址
 let table = num  //表名
 let total = 0 //总章节数
 let id = 0 //计数器
-const chapters = 10 //爬取多少章
+const chapters = 50 //爬取多少章
 
 function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g, '').replace(/&nbsp;/g, '')
@@ -109,10 +109,8 @@ function main(url) {
         })
 }
 
-app.get('/', function (req, response, next) {
-    main(url)
-})
 
-app.listen(3378, function () {
-    console.log('server listening on 3378')
-})
+main(url)
+
+
+

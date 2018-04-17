@@ -55,6 +55,10 @@ router.post('/article', function (req, res, next) {
 router.post('/novel',function(req,res,next) {
   db.novelKey(req,res,next);
 });
+//novel details
+router.post('/novelsc',function(req,res,next) {
+  db.novelDetails(req,res,next);
+});
 // delete_article
 router.post('/delete_a', function(req, res, next) {
     db.delArticle(req, res, next)
