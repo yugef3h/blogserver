@@ -341,27 +341,23 @@ module.exports = {
     let keyn = req.body.keyn;
     let page = req.body.page;
     let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
-    //https://m.zwdu.com/search.php?keyword=重燃&page=1
-    //console.log(req.body);
     pool.getConnection(function (err, connection) {
       connection.query($sql.novelKey + `"%${keyn}%"`, function (err, data) {
         if (data.length === 0) {
           connection.release();
-          //返回状态码，避免被爬虫错误收录
-          //res.status(404).end('err');
           ztj(url, function (data) {
+            let name = data.name;
             if (data.author) {
-              connection.query($sql.addNovel, [data.author, data.name, data.content], function (err, data) {
+              connection.query($sql.addNovel, [data.author, name, data.content], function (err, data) {
 
                 if (data.length === 0) {
                   res.end({'err': '添加失败'});
                 } else {
-                  res.send({'tip':`Hi, <<${data.name}>> 首次爬取缓存，请点此!`})
+                  console.log(data);
+                  res.send({'tip':`<<${name}>> 首次缓存，请点此!`})
                 }
               });
             } else {
-              //源地址资源总数反馈
-              //console.log(data)
               res.send(data)
             }
           });
