@@ -33,7 +33,7 @@ function fetUrl(url, callback) {
       let $ = cheerio.load(res.text)
       const arr = []
       const content = null
-      console.log($("#content"))
+      //console.log($("#content"))
       if ($("#content")[0]) {
         const content = reconvert($("#content").html())
         //分析结构后分割html

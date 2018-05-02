@@ -7,7 +7,7 @@ module.exports = {
     queryByName: 'SELECT * FROM movielist WHERE name LIKE ',
     queryLogin: 'SELECT * FROM users WHERE UserName=?',
     queryArticle: 'SELECT * FROM article order by id desc limit ?,?',
-    queryId: 'SELECT count(id) as count FROM users',
+    queryId: 'SELECT count(id) AS count FROM users',
     queryCase: 'SELECT * FROM cases order by id desc limit ?,?',
     delUsers: 'DELETE FROM users WHERE Id=?',
     addUsers: 'INSERT INTO users (Id,ComTelephone,Password,UserName,CompanyId,IsAdmin) values (0,?,?,?,0,0)',
@@ -20,5 +20,6 @@ module.exports = {
     artId: 'SELECT * FROM article WHERE id=?',
     caseId : 'SELECT * FROM cases WHERE id=?',
   novelKey: 'SELECT * FROM booktitles WHERE name LIKE ',// like后面的空格
+  novelKeyMob: 'SELECT * FROM booktitles WHERE name LIKE ',
   addNovel: 'INSERT INTO booktitles (id, author, name, titles) value (0, ?, ?, ?)'
 };

@@ -34,7 +34,7 @@ function getHtmlByUrl(href, callback) {
         let content = [];
         $('#list dd').each((i, v) => {
           let $v = $(v)
-          content.push($v.find('a').text() + '+' + 'https://www.zwdu.com' + $v.find('a').attr('href'))
+          content.push($v.find('a').text() + '+' + $v.find('a').attr('href'))
         })
         let obj = {
           author: $('#info p').first().text(),

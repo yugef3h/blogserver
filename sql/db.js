@@ -131,10 +131,12 @@ module.exports = {
   //查找article
   article: function (req, res, next) {
     let page = req.body.page ? parseInt(req.body.page) : 1;
-    //未转换
+    //req.body未转换
     let rows = req.body.rows;
     pool.getConnection(function (err, connection) {
+
       connection.query($sql.queryArticle, [(page - 1) * rows, rows], function (err, data, count) {
+        console.log(data);
         connection.query($sql.queryId, function (err, count) {
           let obj = {
             data: data,
@@ -240,6 +242,7 @@ module.exports = {
     let rows = req.body.rows ? parseInt(req.body.rows) : 5;
     pool.getConnection(function (err, connection) {
       connection.query($sql.queryUsers, [(page - 1) * 5, rows], function (err, data) {
+        console.log(data);
         connection.query($sql.queryId, function (err, count) {
           //console.log(data)
           let obj = {
@@ -353,7 +356,40 @@ module.exports = {
                 if (data.length === 0) {
                   res.end({'err': '添加失败'});
                 } else {
-                  console.log(data);
+                  //console.log(data);
+                  res.send({'tip':`<<${name}>> 首次缓存，请点此!`})
+                }
+              });
+            } else {
+              res.send(data)
+            }
+          });
+          return;
+        }
+        res.send(data);
+        connection.release();
+
+      })
+    })
+  },
+  //手机端小说查询+分页
+  novelKeyMob: function (req, res, next) {
+    let keyn = req.body.keyn;
+    let page = req.body.page;
+    let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
+    pool.getConnection(function (err, connection) {
+      connection.query($sql.novelKeyMob + `"%${keyn}%"`, function (err, data) {
+        if (data.length === 0) {
+          connection.release();
+          ztj(url, function (data) {
+            let name = data.name;
+            if (data.author) {
+              connection.query($sql.addNovel, [data.author, name, data.content], function (err, data) {
+
+                if (data.length === 0) {
+                  res.end({'err': '添加失败'});
+                } else {
+                  //console.log(data);
                   res.send({'tip':`<<${name}>> 首次缓存，请点此!`})
                 }
               });
