@@ -27,7 +27,6 @@ let url = urlList[urlId - 1]  //url地址
 let table = num  //表名
 let total = 0 //总章节数
 let id = 0 //计数器
-const chapters = 50 //爬取多少章
 
 function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g, '').replace(/&nbsp;/g, '')
@@ -96,9 +95,7 @@ function main(url) {
             total = $('#list dd').length
             console.log(`共${$('#list dd').length}章`)
             $('#list dd').each(function (i, v) {
-                if (i < chapters) {
-                    urls.push('http://www.zwdu.com' + $(v).find('a').attr('href'))
-                }
+              urls.push('http://www.zwdu.com' + $(v).find('a').attr('href'))
             })
             async.mapLimit(urls, 5, function (url, callback) {
                 id++
@@ -110,7 +107,7 @@ function main(url) {
 }
 
 
-main(url)
+//main(url)
 
 
 

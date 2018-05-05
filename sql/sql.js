@@ -7,7 +7,7 @@ module.exports = {
     queryByName: 'SELECT * FROM movielist WHERE name LIKE ',
     queryLogin: 'SELECT * FROM users WHERE UserName=?',
     queryArticle: 'SELECT * FROM article order by id desc limit ?,?',
-    queryId: 'SELECT count(id) AS count FROM users',
+    queryId: 'SELECT count(id) AS count FROM users', //返回id总数
     queryCase: 'SELECT * FROM cases order by id desc limit ?,?',
     delUsers: 'DELETE FROM users WHERE Id=?',
     addUsers: 'INSERT INTO users (Id,ComTelephone,Password,UserName,CompanyId,IsAdmin) values (0,?,?,?,0,0)',
@@ -19,7 +19,9 @@ module.exports = {
     queryEssage: 'INSERT INTO article (id,title,tag,author,content,CreateTime,ArticleImg,see,chart,des) values (0,?,?,?,?,?,?,0,0,?)',
     artId: 'SELECT * FROM article WHERE id=?',
     caseId : 'SELECT * FROM cases WHERE id=?',
-  novelKey: 'SELECT * FROM booktitles WHERE name LIKE ',// like后面的空格
-  novelKeyMob: 'SELECT * FROM booktitles WHERE name LIKE ',
-  addNovel: 'INSERT INTO booktitles (id, author, name, titles) value (0, ?, ?, ?)'
+    addTable: 'INSERT INTO `?` (id, author, novelname, title) value (0, ?, ?, ?);',
+    queryMap: 'select tablename from map where novelname like ',
+    queryTable: 'select * from `?` ',
+    addMap: 'INSERT INTO map (id, tablename, novelname) value (0, ?, ?);',
+    creTable: 'create table `yuge`.`?` (`id` int unsigned not null auto_increment,author varchar(100) not null,novelname varchar(100) not null,title varchar(100) not null,PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8;'
 };

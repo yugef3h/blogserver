@@ -3,7 +3,7 @@ let $conf = require('./config');
 let $sql = require('./sql');
 let crypto = require('crypto');
 let jwt = require("jsonwebtoken");
-let ztj = require('../crawler/titles');
+let crawler = require('../crawler/titles');
 let fetUrl = require('../crawler/bk');
 const async = require('async');
 let pool = mysql.createPool($conf.mysql);
@@ -136,7 +136,7 @@ module.exports = {
     pool.getConnection(function (err, connection) {
 
       connection.query($sql.queryArticle, [(page - 1) * rows, rows], function (err, data, count) {
-        console.log(data);
+        //console.log(data);
         connection.query($sql.queryId, function (err, count) {
           let obj = {
             data: data,
@@ -339,68 +339,81 @@ module.exports = {
       })
     })
   },
-  //小说查询
-  novelKey: function (req, res, next) {
+  //menu爬取保存
+  crawlerMenu: function (req, res, next) {
+    let url = req.body.url;
     let keyn = req.body.keyn;
-    let page = req.body.page;
-    let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
     pool.getConnection(function (err, connection) {
-      connection.query($sql.novelKey + `"%${keyn}%"`, function (err, data) {
-        if (data.length === 0) {
-          connection.release();
-          ztj(url, function (data) {
-            let name = data.name;
-            if (data.author) {
-              connection.query($sql.addNovel, [data.author, name, data.content], function (err, data) {
+      crawler.getSections(url, function (results) {
+        let tip = results[0].novelname
+        let author = results[0].author;
+        res.send({'tip':`<<${tip}>> 首次加载，请稍候!`})
+        connection.query($sql.queryMap + `'%${keyn}%'`, keyn, function (err, data) {
 
-                if (data.length === 0) {
-                  res.end({'err': '添加失败'});
-                } else {
-                  //console.log(data);
-                  res.send({'tip':`<<${name}>> 首次缓存，请点此!`})
-                }
-              });
-            } else {
-              res.send(data)
-            }
-          });
-          return;
-        }
-        res.send(data);
-        connection.release();
+          if (err) throw err
 
-      })
+
+          results.some(function (result)  {
+
+            let section = result.section;
+            connection.query($sql.addTable, [data[0].tablename, author, tip, section], function (err, data) {
+              if (err) throw err
+            });
+
+          })
+
+        })
+
+
+      });
+      connection.release();
     })
   },
-  //手机端小说查询+分页
-  novelKeyMob: function (req, res, next) {
+  //小说查询
+  novelKey: function (req, res, next) {
+    let reg = /keyword/;
+    let tablename = parseInt(new Date().toLocaleString().substring(9).replace(/:/g,'').trim());
     let keyn = req.body.keyn;
     let page = req.body.page;
     let url = req.body.depurl ?  req.body.depurl : `https://www.zwdu.com/search.php?keyword=${keyn}&page=${page}`;
     pool.getConnection(function (err, connection) {
-      connection.query($sql.novelKeyMob + `"%${keyn}%"`, function (err, data) {
-        if (data.length === 0) {
-          connection.release();
-          ztj(url, function (data) {
-            let name = data.name;
-            if (data.author) {
-              connection.query($sql.addNovel, [data.author, name, data.content], function (err, data) {
+      //首先map表查找是否已收录 & 对应表是否已加载
+      connection.query($sql.queryMap + `'%${keyn}%'`, function (err, data) {
 
-                if (data.length === 0) {
-                  res.end({'err': '添加失败'});
-                } else {
-                  //console.log(data);
-                  res.send({'tip':`<<${name}>> 首次缓存，请点此!`})
-                }
-              });
-            } else {
+        if (err) throw err
+
+        if (data.length === 0) {
+
+          //2.搜同名书籍
+          if (reg.test(url)) {
+
+            crawler.getUrls(url, function (data) {
               res.send(data)
-            }
-          });
+            })
+            //1.map标记&建表  bug:当选择同名所需书籍时map表已有，前端却无法显示。
+            connection.query($sql.addMap, [tablename,keyn ], function (err, data) {
+              if (err) throw err
+
+              connection.query($sql.creTable, tablename, function (err, data) {
+                if (err) throw err
+                connection.release();
+              })
+            });
+
+          }
+
           return;
         }
-        res.send(data);
-        connection.release();
+
+
+
+        //数据库查询
+        connection.query($sql.queryTable, data[0].tablename, function (err, data) {
+          if (err) throw err
+          res.send(data);
+          connection.release();
+        })
+
 
       })
     })

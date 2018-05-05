@@ -55,9 +55,9 @@ router.post('/article', function (req, res, next) {
 router.post('/novel',function(req,res,next) {
   db.novelKey(req,res,next);
 });
-//novelmob
-router.post('/novelmob',function(req,res,next) {
-  db.novelKeyMob(req,res,next);
+//crawlermenu
+router.post('/crawler',function(req,res,next) {
+  db.crawlerMenu(req,res,next);
 });
 //novel details
 router.post('/novelsc',function(req,res,next) {
