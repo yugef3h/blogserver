@@ -1,0 +1,12 @@
+syntax="proto3";
+package chatroom;
+import "common/common.proto";
+
+
+service MessageReceiveService{
+    rpc SendMessages(SendMessagesRequest) returns(common.Response);
+}
+
+message SendMessagesRequest {
+    repeated common.Message messages = 2;
+}

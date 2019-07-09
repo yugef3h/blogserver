@@ -1,0 +1,39 @@
+syntax="proto3";
+package chatroom;
+import "common/common.proto";
+
+service MemberService {
+    rpc Login(Member) returns (LoginResponse);
+    rpc Logout(TokenRequest) returns (common.Response);
+    rpc SetData(SetDataRequest) returns (common.Response);
+    rpc GetMember(GetMemberRequest) returns (MemberResponse);
+    rpc Validate(TokenRequest) returns (MemberResponse);
+}
+
+message Member {
+    string name = 1;
+    map<string, string> data = 2;
+}
+
+message MemberResponse{
+    common.Result result = 1;
+    Member member = 2;
+}
+
+message SetDataRequest{
+    string token = 1;
+    map<string, string> data = 2;
+}
+
+message GetMemberRequest{
+    string memberName = 1;
+}
+
+message LoginResponse{
+    common.Result result = 1;
+    string token = 2;
+}
+
+message TokenRequest{
+    string token = 2;
+}

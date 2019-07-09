@@ -1,0 +1,13 @@
+syntax="proto3";
+package chatroom;
+import "common/common.proto";
+
+service MessageSendService{
+    rpc ReceiveMessages(MessageReceiveRequest) returns(common.MessageResponse);
+}
+
+message MessageReceiveRequest{
+    string RoomID = 1;
+    repeated string consumeMessageIDs = 2;
+    int32 capacity = 3;
+}

@@ -1,0 +1,33 @@
+syntax="proto3";
+package common;
+message Result {
+    bool success = 1;
+    string error = 2;
+    int32 code = 3;
+}
+
+message EmptyRequest {}
+
+message Response {
+    Result result = 1;
+}
+
+message MessageBody {
+    string value = 1;
+    map<string, MessageBody> body = 2;
+}
+
+message Message {
+    string sender = 1; //由系统赋值
+    string roomID = 2;
+    map<string, string> labels = 3;
+    map<string, MessageBody> body = 4;
+    map<string, MessageBody> userState = 5;
+    string id = 6; // 由系统赋值
+    string timestamp = 7; // 发送时间戳 由系统赋值
+}
+
+message MessageResponse{
+    Result result = 1;
+    repeated Message messages = 2;
+}

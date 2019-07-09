@@ -1,0 +1,41 @@
+syntax="proto3";
+package gateway;
+import "common/common.proto";
+import "chatroom/member.proto";
+import "chatroom/room.proto";
+import "chatroom/receiver.proto";
+
+service Member {
+    rpc Login(chatroom.Member) returns (chatroom.LoginResponse);
+    rpc Logout(chatroom.TokenRequest) returns (common.Response);
+    rpc GetMember(GetMemberRequest) returns (chatroom.MemberResponse);
+}
+
+service Room{
+    rpc Available(AvailableRequest) returns (chatroom.RoomListResponse);
+}
+
+service Chat{
+    rpc SendMessage(SendMessageRequest) returns (common.Response);
+    rpc ReceiveMessage(MessageReceiveRequest) returns (common.MessageResponse);
+}
+
+message MessageReceiveRequest{
+    string token = 1;
+    repeated string consumeMessageIDs = 2;
+    int32 capacity = 3;
+}
+
+message SendMessageRequest{
+    string token = 1;
+    chatroom.SendMessagesRequest request = 3;
+}
+
+message GetMemberRequest{
+    string token = 1;
+    chatroom.GetMemberRequest request = 2;
+}
+
+message AvailableRequest{
+    string token = 1;
+}
