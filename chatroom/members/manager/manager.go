@@ -6,6 +6,7 @@ import (
 	"sync"
 )
 
+// 登录验证，token 每次都重新生成
 func Create() *Manager {
 	return &Manager{
 		lock:         sync.RWMutex{},

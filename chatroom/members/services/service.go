@@ -37,6 +37,8 @@ func (s Service) Validate(ctx context.Context, in *chatroom.TokenRequest, resp *
 	return nil
 }
 
+
+// login token refresh
 func (s Service) Login(ctx context.Context, in *chatroom.Member, resp *chatroom.LoginResponse) error {
 	m, err := s.memberManager.Login(manager.MemberName(in.Name), in.Data)
 	if nil != err {
