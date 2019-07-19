@@ -1,5 +1,6 @@
 # warehouse-chatroom 仓储聊天室
 
+## gitlab 私服配置
 ## 部署
 
 ### 环境准备:
