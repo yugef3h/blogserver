@@ -1,4 +1,4 @@
-# warehouse-chatroom 仓储聊天室
+# warehouse-chatroom 聊天室
 
 ## gitlab 私服配置
 ## 部署
@@ -128,6 +128,9 @@ gcctl deploy
             "roomID": "fcf602901ef1a0fba0f8533181d0cfb8",
             "labels": {
               "a": "b"
+            },
+            "body": {
+              // 数据扩展，限制字符串转换
             }
           }
         ]
